@@ -10,8 +10,6 @@ export class VideoEmbedComponent implements OnInit {
   @Input() site: string = 'YouTube';
   @Input() key: string | null = null;
 
-  url: string = '';
-
   constructor(private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {}

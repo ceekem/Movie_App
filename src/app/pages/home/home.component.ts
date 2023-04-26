@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
   upcomingMovies: Movie[] = [];
   topRatedMovies: Movie[] = [];
   popularTVShows: Movie[] = [];
-
+  //test
   constructor(private mService: MoviesService) {}
 
   ngOnInit(): void {
