@@ -8,7 +8,7 @@
 
   <div class="card flex justify-content-center">
     <p-paginator
-      (onPageChange)="onPageChange($event)"
+      (onPageChange)="paginate($event)"
       [rows]="rows"
       [totalRecords]="10000"
     ></p-paginator>
