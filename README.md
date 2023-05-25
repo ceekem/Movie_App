@@ -36,4 +36,4 @@ The Url sanitization was causing the embedded videos to keep refresh when I crea
 
 ## Github page
 
-[Movie App Page](https://ceekem.github.io/MovieApp/)
+[Movie App Page](https://ceekem.github.io/Movie_App/)
