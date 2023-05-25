@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Movie } from '../../models/movie';
 import { MoviesService } from '../../services/movies.service';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
+import { Paginator } from 'primeng/paginator';
 
 @Component({
   selector: 'app-movies',
@@ -16,6 +17,12 @@ export class MoviesComponent implements OnInit {
 
   rows: number = 20;
   genreId: string | null = null;
+
+  searchValue: string | null = null;
+  pageNumber: number = 1;
+
+  @ViewChild('p', { static: false }) paginator!: Paginator;
+
   constructor(
     private moviesService: MoviesService,
     private route: ActivatedRoute
@@ -32,10 +39,12 @@ export class MoviesComponent implements OnInit {
     });
   }
 
-  getPagedMovies(page: number) {
-    this.moviesService.searchMovies(page, this.rows).subscribe((movies) => {
-      this.movies = movies;
-    });
+  getPagedMovies(page: number, searchKeyword?: string) {
+    this.moviesService
+      .searchMovies(page, this.rows, searchKeyword)
+      .subscribe((movies) => {
+        this.movies = movies;
+      });
   }
 
   getMoviesByGenre(genreId: string, page: number) {
@@ -44,25 +53,37 @@ export class MoviesComponent implements OnInit {
     });
   }
 
-  onPageChange(event: any) {
-    this.first = event.page + 1;
+  // onPageChange(event: any) {
+  //   this.first = event.page + 1;
 
-    this.rows = event.rows;
+  //   this.rows = event.rows;
 
-    this.moviesService
-      .searchMovies(this.first, this.rows)
-      .subscribe((movies) => {
-        this.movies = movies;
-      });
-  }
+  //   this.moviesService
+  //     .searchMovies(this.first, this.rows)
+  //     .subscribe((movies) => {
+  //       this.movies = movies;
+  //     });
+  // }
 
   paginate(event: any) {
-    const pageNumber = event.page + 1;
+    this.pageNumber = event.page + 1;
 
     if (this.genreId) {
-      this.getMoviesByGenre(this.genreId, pageNumber);
+      this.getMoviesByGenre(this.genreId, this.pageNumber);
     } else {
-      this.getPagedMovies(pageNumber);
+      if (this.searchValue) {
+        this.getPagedMovies(this.pageNumber, this.searchValue);
+      } else {
+        this.getPagedMovies(this.pageNumber);
+      }
+    }
+  }
+
+  searchChanged(e: any) {
+    this.pageNumber = 0;
+    this.paginator.changePageToFirst(e);
+    if (this.searchValue) {
+      this.getPagedMovies(1, this.searchValue);
     }
   }
 }

@@ -21,6 +21,7 @@ import { VideoEmbedComponent } from './components/video-embed/video-embed.compon
 import { SafePipe } from './pipes/safe.pipe';
 import { ImageModule } from 'primeng/image';
 import { CarouselModule } from 'primeng/carousel';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { CarouselModule } from 'primeng/carousel';
     TabViewModule,
     ImageModule,
     CarouselModule,
+    InputTextModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

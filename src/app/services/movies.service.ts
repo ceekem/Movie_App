@@ -46,7 +46,31 @@ export class MoviesService {
       );
   }
 
-  searchMovies(page: number = 1, count: number = 20) {
+  searchMovies(page: number = 1, count: number = 20, searchValue?: string) {
+    const uri = searchValue ? '/search/movie' : '/movie/popular';
+    // debugger;
+    if (searchValue) {
+      return this.http
+        .get<MovieDto>(
+          `${this.baseUrl}${uri}?page=${page}&query=${searchValue}&api_key=${this.apiKey}`
+        )
+        .pipe(
+          switchMap((res) => {
+            console.log('search: ', res);
+            return of(res.results.slice(0, count));
+          })
+        );
+    } else {
+      return this.http
+        .get<MovieDto>(
+          `${this.baseUrl}${uri}?page=${page}&api_key=${this.apiKey}`
+        )
+        .pipe(
+          switchMap((res) => {
+            return of(res.results.slice(0, count));
+          })
+        );
+    }
     return this.http
       .get<MovieDto>(
         `${this.baseUrl}/movie/popular?page=${page}&api_key=${this.apiKey}`
