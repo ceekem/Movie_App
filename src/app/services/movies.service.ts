@@ -82,9 +82,9 @@ export class MoviesService {
       );
   }
 
-  getMovie(id: string) {
+  getMovie(id: string, type: string) {
     return this.http.get<Movie>(
-      `${this.baseUrl}/movie/${id}?api_key=${this.apiKey}`
+      `${this.baseUrl}/${type}/${id}?api_key=${this.apiKey}`
     );
     // .pipe(
     //   switchMap((res) => {
@@ -93,10 +93,10 @@ export class MoviesService {
     // );
   }
 
-  getMovieVideos(id: string) {
+  getMovieVideos(id: string, type: string) {
     return this.http
       .get<MovieVideosDTO>(
-        `${this.baseUrl}/movie/${id}/videos?api_key=${this.apiKey}`
+        `${this.baseUrl}/${type}/${id}/videos?api_key=${this.apiKey}`
       )
       .pipe(
         switchMap((res) => {
@@ -115,15 +115,15 @@ export class MoviesService {
       );
   }
 
-  getMovieImages(id: string) {
+  getMovieImages(id: string, type: string) {
     return this.http.get<MovieImages>(
-      `${this.baseUrl}/movie/${id}/images?api_key=${this.apiKey}`
+      `${this.baseUrl}/${type}/${id}/images?api_key=${this.apiKey}`
     );
   }
 
-  getMovieCredit(id: string) {
+  getMovieCredit(id: string, type: string) {
     return this.http.get<MovieCredits>(
-      `${this.baseUrl}/movie/${id}/credits?api_key=${this.apiKey}`
+      `${this.baseUrl}/${type}/${id}/credits?api_key=${this.apiKey}`
     );
   }
 }

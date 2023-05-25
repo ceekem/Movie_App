@@ -25,12 +25,12 @@ export class MovieComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private mService: MoviesService) {}
 
   ngOnInit(): void {
-    this.route.params.pipe(first()).subscribe(({ id }) => {
+    this.route.params.pipe(first()).subscribe(({ id, type }) => {
       console.log(id);
-      this.getMovieDetails(id);
-      this.getMovieVideos(id);
-      this.getMovieImages(id);
-      this.getMovieCredits(id);
+      this.getMovieDetails(id, type);
+      this.getMovieVideos(id, type);
+      this.getMovieImages(id, type);
+      this.getMovieCredits(id, type);
     });
   }
 
@@ -38,33 +38,37 @@ export class MovieComponent implements OnInit, OnDestroy {
     console.log('component destroyed');
   }
 
-  getMovieDetails(id: string) {
-    this.mService.getMovie(id).subscribe((movieData) => {
+  getMovieDetails(id: string, type: string) {
+    this.mService.getMovie(id, type).subscribe((movieData) => {
       this.movie = movieData;
       console.log(this.movie);
     });
   }
 
-  getMovieVideos(id: string) {
-    this.mService.getMovieVideos(id).subscribe((movieVidData) => {
+  getMovieVideos(id: string, type: string) {
+    this.mService.getMovieVideos(id, type).subscribe((movieVidData) => {
       console.log(movieVidData);
       this.movieVideos = movieVidData;
     });
   }
 
-  getMovieImages(id: string) {
-    this.mService.getMovieImages(id).subscribe((movieImgData: MovieImages) => {
-      this.movieImages = movieImgData;
-    });
+  getMovieImages(id: string, type: string) {
+    this.mService
+      .getMovieImages(id, type)
+      .subscribe((movieImgData: MovieImages) => {
+        this.movieImages = movieImgData;
+      });
   }
 
-  getMovieCredits(id: string) {
-    this.mService.getMovieCredit(id).subscribe((movieCdtData: MovieCredits) => {
-      console.log(movieCdtData);
-      this.movieCredits = movieCdtData.cast.filter(
-        (el: any) => el.profile_path != null
-      );
-      console.log('removed all null: ', this.movieCredits);
-    });
+  getMovieCredits(id: string, type: string) {
+    this.mService
+      .getMovieCredit(id, type)
+      .subscribe((movieCdtData: MovieCredits) => {
+        console.log(movieCdtData);
+        this.movieCredits = movieCdtData.cast.filter(
+          (el: any) => el.profile_path != null
+        );
+        console.log('removed all null: ', this.movieCredits);
+      });
   }
 }
