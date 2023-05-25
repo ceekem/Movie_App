@@ -20,7 +20,7 @@ const routes: Routes = [
     component: MoviesComponent,
   },
   {
-    path: 'movie/:id',
+    path: ':type/:id',
     component: MovieComponent,
   },
   {
