@@ -46,8 +46,13 @@ export class MoviesService {
       );
   }
 
-  searchMovies(page: number = 1, count: number = 20, searchValue?: string) {
-    const uri = searchValue ? '/search/movie' : '/movie/popular';
+  searchMovies(
+    page: number = 1,
+    count: number = 20,
+    searchValue?: string,
+    type: string = 'movie'
+  ) {
+    const uri = searchValue ? `/search/${type}` : `/${type}/popular`;
     // debugger;
     if (searchValue) {
       return this.http
